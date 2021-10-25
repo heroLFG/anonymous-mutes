@@ -1,0 +1,27 @@
+html, body, .app {
+    height: 100%;
+}
+
+.app .messages {
+    overflow-y: scroll;
+}
+
+.app .messages.tallest {
+    height: 100%;
+}
+
+.app .messages.taller {
+    height: calc(100% - 88px);
+}
+
+.app .messages.short {
+    height: calc(100% - 388px);
+}
+
+.app .sending.short {
+    height: 50px;
+}
+
+.app .sending.tall {
+    height: 350px;
+}

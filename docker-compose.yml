@@ -1,0 +1,33 @@
+version: "3.7"
+services:
+
+    backend:
+        restart: unless-stopped
+        build:
+            context: .
+            dockerfile: dockerfiles/backend/Dockerfile
+        image: am-backend:latest
+        environment:
+            - DJANGO_SECRET=secret-after-this-${DJANGO_SECRET}
+            - HOST=${HOST}
+            - CDN_HOST=${CDN_HOST}
+            - ENV=env_${ENV}
+            - ANONYMOUS_MUTES_WEBHOOKS=${ANONYMOUS_MUTES_WEBHOOKS}
+            - ANONYMOUS_MUTES_SECRET=${ANONYMOUS_MUTES_SECRET}
+        volumes:
+            - ./src:/application
+        ports:
+            - ${ANONYMOUS_MUTES_PORT}:8080
+        command: ["bash", "server.sh"]
+
+    frontend:
+        restart: unless-stopped
+        build:
+            context: .
+            dockerfile: dockerfiles/frontend/Dockerfile
+        image: am-frontend:nginx-webpack
+        volumes:
+            - ./nginx.conf:/etc/nginx/nginx.conf
+            - ./src/frontend:/home/www-data/static
+        ports:
+            - ${ANONYMOUS_MUTES_FRONTEND_PORT}:80
