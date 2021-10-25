@@ -5,7 +5,7 @@ services:
         restart: unless-stopped
         build:
             context: .
-            dockerfile: dockerfiles/backend/Dockerfile
+            dockerfile: dockerfiles/backend/dockerfile
         image: am-backend:latest
         environment:
             - DJANGO_SECRET=secret-after-this-${DJANGO_SECRET}
@@ -24,7 +24,7 @@ services:
         restart: unless-stopped
         build:
             context: .
-            dockerfile: dockerfiles/frontend/Dockerfile
+            dockerfile: dockerfiles/frontend/dockerfile
         image: am-frontend:nginx-webpack
         volumes:
             - ./nginx.conf:/etc/nginx/nginx.conf
